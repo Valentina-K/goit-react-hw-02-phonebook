@@ -1,19 +1,58 @@
+import React, { Component } from 'react';
+import { customAlphabet } from 'nanoid';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-export const App = () => {
-  return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101',
-      }}
-    >
-      <h1>Phonebook</h1>
-      <ContactForm />
-      <h2>Contacts</h2>
-    </div>
-  );
-};
+import ContactForm from './ContactForm';
+import Filter from './Filter';
+import ContactList from './ContactList';
+import { isNameContains } from './Utils/isNameContains';
+
+const nanoid = customAlphabet('1234567890id-', 5);
+
+export default class App extends Component {
+  state = {
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
+    filter: '',
+  };
+  contactNames = [];
+
+  getContactNames = () => {
+    const { contacts } = this.state;
+    for (const contact of contacts) {
+      this.contactNames.push(contact.name);
+    }
+  };
+
+  addContact = ({ name, number }) => {
+    console.log(name, number);
+    const newContact = { id: nanoid(), name, number };
+    this.getContactNames();
+    if (isNameContains(name, this.contactNames)) {
+      Notify.info(`${name} is already in contacts`);
+    } else {
+      this.setState(({ contacts }) => contacts.push(newContact));
+      //this.setState(this.state.contacts.push({ id: nanoid(), name, number }));
+    }
+  };
+  deleteContact = ({ id }) => {};
+  findByName = ({ name }) => {};
+
+  render() {
+    return (
+      <div>
+        <h1>Phonebook</h1>
+        <ContactForm onSubmit={this.addContact} />
+        <h2>Contacts</h2>
+        <Filter onChange={this.findByName} />
+        <ContactList
+          contacts={this.state.contacts}
+          filter={this.state.filter}
+        />
+      </div>
+    );
+  }
+}

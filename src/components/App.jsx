@@ -4,7 +4,8 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import ContactForm from './ContactForm';
 import Filter from './Filter';
 import ContactList from './ContactList';
-import { isNameContains } from './Utils/isNameContains';
+
+import { getFilterContacts } from './Utils/getFilterContacts';
 
 const nanoid = customAlphabet('1234567890id-', 5);
 
@@ -18,28 +19,24 @@ export default class App extends Component {
     ],
     filter: '',
   };
-  contactNames = [];
-
-  getContactNames = () => {
-    const { contacts } = this.state;
-    for (const contact of contacts) {
-      this.contactNames.push(contact.name);
-    }
-  };
 
   addContact = ({ name, number }) => {
-    console.log(name, number);
     const newContact = { id: nanoid(), name, number };
-    this.getContactNames();
-    if (isNameContains(name, this.contactNames)) {
+    if (this.state.contacts.some(contact => contact.name === name)) {
       Notify.info(`${name} is already in contacts`);
     } else {
       this.setState(({ contacts }) => contacts.push(newContact));
-      //this.setState(this.state.contacts.push({ id: nanoid(), name, number }));
     }
   };
-  deleteContact = ({ id }) => {};
-  findByName = ({ name }) => {};
+
+  deleteContact = ({ id }) => {
+    this.setState(({ contacts }) => getFilterContacts(contacts, id));
+  };
+
+  findByName = ({ name }) => {
+    this.getContactNames();
+    this.setState(({ contacts }) => contacts.find(name));
+  };
 
   render() {
     return (

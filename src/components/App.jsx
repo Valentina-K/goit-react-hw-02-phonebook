@@ -33,10 +33,8 @@ export default class App extends Component {
     this.setState(({ contacts }) => getFilterContacts(contacts, id));
   };
 
-  findByName = ({ name }) => {
-    this.getContactNames();
-    this.setState(({ contacts }) => contacts.find(name));
-  };
+  findByName = ({ name }) =>
+    this.state.contacts.filter(contact => contact.name.includes(name));
 
   render() {
     return (
@@ -48,6 +46,7 @@ export default class App extends Component {
         <ContactList
           contacts={this.state.contacts}
           filter={this.state.filter}
+          onClick={this.deleteContact}
         />
       </div>
     );

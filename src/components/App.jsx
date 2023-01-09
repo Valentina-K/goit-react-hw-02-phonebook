@@ -5,8 +5,6 @@ import ContactForm from './ContactForm';
 import Filter from './Filter';
 import ContactList from './ContactList';
 
-import { getFilterContacts } from './Utils/getFilterContacts';
-
 const nanoid = customAlphabet('1234567890id-', 5);
 
 export default class App extends Component {
@@ -29,23 +27,32 @@ export default class App extends Component {
     }
   };
 
-  deleteContact = ({ id }) => {
-    this.setState(({ contacts }) => getFilterContacts(contacts, id));
+  deleteContact = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
   };
 
-  findByName = ({ name }) =>
-    this.state.contacts.filter(contact => contact.name.includes(name));
+  onChangeFilter = evt => this.setState({ filter: evt.target.value });
+
+  findByName = () =>
+    this.state.contacts.filter(contact =>
+      contact.name
+        .toLocaleLowerCase()
+        .includes(this.state.filter.toLocaleLowerCase())
+    );
 
   render() {
+    const { contacts, filter } = this.state;
+    const filterContacts = this.findByName();
     return (
       <div>
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
-        <Filter onChange={this.findByName} />
+        <Filter onChange={this.onChangeFilter} value={filter} />
         <ContactList
-          contacts={this.state.contacts}
-          filter={this.state.filter}
+          contacts={filter === '' ? contacts : filterContacts}
           onClick={this.deleteContact}
         />
       </div>

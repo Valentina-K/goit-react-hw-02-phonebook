@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { customAlphabet } from 'nanoid';
+import PropTypes from 'prop-types';
 import Form from './ContactForm.styled';
 
 const nanoid = customAlphabet('1234567890id-', 5);
@@ -66,3 +67,7 @@ export default class ContactForm extends Component {
     );
   }
 }
+
+ContactForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

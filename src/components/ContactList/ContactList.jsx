@@ -1,20 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Contact from 'components/Contact/Contact';
 import { List } from './ContactList.styled';
 const ContactList = ({ contacts, onClick }) => {
   return (
     <List>
       {contacts.map(contact => (
-        <div>
-          <Contact
-            key={contact.id}
-            name={contact.name}
-            number={contact.number}
-          />
+        <Contact key={contact.id} name={contact.name} number={contact.number}>
           <button onClick={() => onClick(contact.id)}>Delete</button>
-        </div>
+        </Contact>
       ))}
     </List>
   );
+};
+
+ContactList.protoTypes = {
+  contacts: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 export default ContactList;

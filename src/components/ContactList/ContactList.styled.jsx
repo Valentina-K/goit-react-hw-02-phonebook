@@ -3,15 +3,7 @@ export const List = styled.ul`
   width: 400px;
   font-size: 24px;
   list-style: none;
-  & div {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    align-items: baseline;
-    &:not(:last-child) {
-      margin-bottom: 10px;
-    }
-  }
+
   & button {
     border: none;
     padding: 10px;

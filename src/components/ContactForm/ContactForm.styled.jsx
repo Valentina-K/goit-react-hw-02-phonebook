@@ -7,6 +7,8 @@ const Form = styled.form`
   width: 500px;
   & div {
     margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
   }
   & label {
     margin-right: 8px;
@@ -14,7 +16,7 @@ const Form = styled.form`
   }
   & input {
     width: 60%;
-    height: 20px;
+    font-size: 20px;
     padding: 12px;
     border: 1px solid rgba(33, 33, 33, 0.2);
     border-radius: 4px;

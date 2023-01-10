@@ -36,7 +36,7 @@ export default class ContactForm extends Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <div>
-          <label htmlFor={this.nameInput}>Name </label>
+          <label htmlFor={this.nameInput}>Name</label>
           <input
             type="text"
             name="name"

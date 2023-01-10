@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { customAlphabet } from 'nanoid';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { Container } from './App.styled';
 import ContactForm from './ContactForm';
 import Filter from './Filter';
 import ContactList from './ContactList';
@@ -46,7 +47,7 @@ export default class App extends Component {
     const { contacts, filter } = this.state;
     const filterContacts = this.findByName();
     return (
-      <div>
+      <Container>
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
@@ -55,7 +56,7 @@ export default class App extends Component {
           contacts={filter === '' ? contacts : filterContacts}
           onClick={this.deleteContact}
         />
-      </div>
+      </Container>
     );
   }
 }

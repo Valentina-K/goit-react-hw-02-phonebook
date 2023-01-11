@@ -15,7 +15,13 @@ const ContactList = ({ contacts, onClick }) => {
 };
 
 ContactList.protoTypes = {
-  contacts: PropTypes.arrayOf(PropTypes.string).isRequired,
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ),
   onClick: PropTypes.func.isRequired,
 };
 export default ContactList;

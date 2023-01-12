@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   number: '',
 };
 export default class ContactForm extends Component {
+  static propTypes = { onSubmit: PropTypes.func.isRequired };
   state = {
     name: '',
     number: '',
@@ -29,6 +30,7 @@ export default class ContactForm extends Component {
 
   handleSubmit = evt => {
     evt.preventDefault();
+    console.dir(evt);
     this.props.onSubmit(this.state);
     this.reset();
   };
@@ -67,7 +69,3 @@ export default class ContactForm extends Component {
     );
   }
 }
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};

@@ -24,7 +24,9 @@ export default class App extends Component {
     if (this.state.contacts.some(contact => contact.name === name)) {
       Notify.info(`${name} is already in contacts`);
     } else {
-      this.setState(({ contacts }) => contacts.push(newContact));
+      this.setState(({ contacts }) => ({
+        contacts: [...contacts, newContact],
+      }));
     }
   };
 
